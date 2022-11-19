@@ -1,16 +1,75 @@
 import React from "react";
 import styled from "styled-components";
 import backgroundWhite from "../src/assets/background/Background-Login.png";
-//import sun from "../src/icons/sun.png";
+import backgroundDark from "../src/assets/background/Background-Dark.png";
+import sun from "../src/assets/icons/sun.png";
 import moon from "../src/assets/icons/moon.png";
 import rocket from "../src/assets/icons/rocket.png";
 import logo from "../src/assets/icons/SpaceX.svg";
 
 function App() {
+  const [tema, setTema] = React.useState(false);
+  const [name, setName] = React.useState("");
+  const [error, setError] = React.useState(false);
+  const [bodyForm, setBodyForm] = React.useState(true);
+  const [bodyCount, setBodyCount] = React.useState(false);
+
+  const Tempo_Total = 0;
+  const [tempoRestante, setTempoRestante] = React.useState(Tempo_Total);
+
+  const formataTempo = (time) => {
+    const minutes = Math.floor(time / 60);
+    let secunds = time % 60;
+    if (secunds < 10) {
+      secunds = `0${secunds}`;
+    }
+
+    return `${minutes}:${secunds}`;
+  };
+
+  const startTimer = () => {
+    setTimeout(() => {
+      if (tempoRestante > 0) {
+        setTempoRestante(tempoRestante - 1);
+      }
+    }, 1000);
+  };
+
+  const submit = () => {
+    if (!name) {
+      setError(true);
+      setTimeout(() => {
+        setError(false);
+      }, 4000);
+    } else {
+      setBodyCount(true);
+      setBodyForm(false);
+      setTempoRestante(tempoRestante + 3);
+      setTimeout(() => {
+        console.log("entrou");
+        setBodyCount(false);
+        setBodyForm(true);
+        setName("");
+      }, 4000);
+    }
+  };
+
+  startTimer();
+
   return (
-    <Container>
+    <Container
+      style={
+        tema
+          ? { backgroundImage: `url(${backgroundDark})` }
+          : { backgroundImage: `url(${backgroundWhite})` }
+      }
+    >
       <Header>
-        <ButtonTema src={moon} alt="tema" />
+        <ButtonTema
+          src={tema ? sun : moon}
+          alt="tema"
+          onClick={() => setTema(!tema)}
+        />
       </Header>
       <Row>
         <BodyLogo>
@@ -19,13 +78,28 @@ function App() {
         <BodyForm>
           <Form>
             <Icon src={rocket} alt="rocket" />
-            <Title>Decolagem</Title>
-            <Input
-              type="text"
-              maxLength={20}
-              placeholder="Digite seu primeiro nome..."
-            />
-            <Button>Entrar</Button>
+            {bodyForm && (
+              <>
+                <Title>Decolagem</Title>
+                <Input
+                  type="text"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  maxLength={20}
+                  placeholder="Digite seu primeiro nome..."
+                />
+                {error && (
+                  <Error>Preencha seu nome para iniciar a decolagem.</Error>
+                )}
+                <Button onClick={() => submit()}>Entrar</Button>
+              </>
+            )}
+            {bodyCount && (
+              <>
+                <Title>Iniciando em...</Title>
+                <Subtitle>{formataTempo(tempoRestante)}</Subtitle>
+              </>
+            )}
           </Form>
         </BodyForm>
       </Row>
@@ -34,11 +108,10 @@ function App() {
 }
 
 const Container = styled.div`
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   display: flex;
   flex-direction: column;
-  background-image: url(${backgroundWhite});
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 `;
@@ -75,6 +148,18 @@ const BodyLogo = styled.div`
   justify-content: center;
   align-items: center;
   cursor: pointer;
+`;
+
+const Subtitle = styled.p`
+  text-align: center;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 36px;
+  line-height: 42px;
+  text-align: center;
+
+  color: #ffffff;
 `;
 
 const Logo = styled.img``;
@@ -139,6 +224,18 @@ const Input = styled.input`
     font-size: 16px;
     line-height: 42px;
   }
+`;
+
+const Error = styled.p`
+  margin-top: -10px;
+  margin-bottom: -32px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 42px;
+  text-align: center;
+  color: red;
 `;
 
 const Button = styled.button`
