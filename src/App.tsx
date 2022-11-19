@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-//import backgroundWhite from "../src/assets/background/Background-Login.png";
+import backgroundWhite from "../src/assets/background/Background-Login.png";
 //import sun from "../src/icons/sun.png";
 //import moon from "../src/assets/icons/moon.png";
 //import rocket from "../src/assets/icons/rocket.png";
@@ -38,7 +38,7 @@ const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
-
+  background-image: url(${backgroundWhite});
   background-repeat: no-repeat;
   background-size: 100vw 100vh;
 `;
