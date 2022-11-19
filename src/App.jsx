@@ -6,6 +6,8 @@ import sun from "../src/assets/icons/sun.png";
 import moon from "../src/assets/icons/moon.png";
 import rocket from "../src/assets/icons/rocket.png";
 import logo from "../src/assets/icons/SpaceX.svg";
+import Title from "./components/Title/Title";
+import FormCount from "./components/FormCount/FormCount";
 
 function App() {
   const [tema, setTema] = React.useState(false);
@@ -18,13 +20,12 @@ function App() {
   const [tempoRestante, setTempoRestante] = React.useState(Tempo_Total);
 
   const formataTempo = (time) => {
-    const minutes = Math.floor(time / 60);
     let secunds = time % 60;
     if (secunds < 10) {
-      secunds = `0${secunds}`;
+      secunds = `${secunds}`;
     }
 
-    return `${minutes}:${secunds}`;
+    return `${secunds}`;
   };
 
   const startTimer = () => {
@@ -76,31 +77,29 @@ function App() {
           <Logo src={logo} alt="logo" />
         </BodyLogo>
         <BodyForm>
-          <Form>
-            <Icon src={rocket} alt="rocket" />
-            {bodyForm && (
+          {bodyForm && (
+            <Form>
+              <Icon src={rocket} alt="rocket" />
               <>
-                <Title>Decolagem</Title>
+                <Title title="Decolagem" />
                 <Input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   maxLength={20}
                   placeholder="Digite seu primeiro nome..."
+                  style={
+                    error ? { border: "1px solid #305dff" } : { border: "none" }
+                  }
                 />
                 {error && (
                   <Error>Preencha seu nome para iniciar a decolagem.</Error>
                 )}
                 <Button onClick={() => submit()}>Entrar</Button>
               </>
-            )}
-            {bodyCount && (
-              <>
-                <Title>Iniciando em...</Title>
-                <Subtitle>{formataTempo(tempoRestante)}</Subtitle>
-              </>
-            )}
-          </Form>
+            </Form>
+          )}
+          {bodyCount && <FormCount text={formataTempo(tempoRestante)} />}
         </BodyForm>
       </Row>
     </Container>
@@ -150,18 +149,6 @@ const BodyLogo = styled.div`
   cursor: pointer;
 `;
 
-const Subtitle = styled.p`
-  text-align: center;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 42px;
-  text-align: center;
-
-  color: #ffffff;
-`;
-
 const Logo = styled.img``;
 
 const BodyForm = styled.div`
@@ -192,17 +179,6 @@ const Icon = styled.img`
   margin-top: -5%;
 `;
 
-const Title = styled.h1`
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 36px;
-  line-height: 42px;
-  text-align: center;
-
-  color: #ffffff;
-`;
-
 const Input = styled.input`
   width: 250px;
   height: 40px;
@@ -210,7 +186,6 @@ const Input = styled.input`
   background: rgba(0, 0, 0, 0.63);
   border-radius: 50px;
   outline: none;
-  border: none;
   font-family: "Roboto", sans-serif;
   font-wheight: 400;
   font-size: 16px;
@@ -231,11 +206,11 @@ const Error = styled.p`
   margin-bottom: -32px;
   font-family: "Roboto", sans-serif;
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-size: 16px;
   line-height: 42px;
   text-align: center;
-  color: red;
+  color: #305dff;
 `;
 
 const Button = styled.button`
