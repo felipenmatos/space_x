@@ -2,23 +2,23 @@ import React from "react";
 import styled from "styled-components";
 import backgroundWhite from "../src/assets/background/Background-Login.png";
 //import sun from "../src/icons/sun.png";
-//import moon from "../src/assets/icons/moon.png";
-//import rocket from "../src/assets/icons/rocket.png";
-//import logo from "../src/assets/icons/SpaceX.svg";
+import moon from "../src/assets/icons/moon.png";
+import rocket from "../src/assets/icons/rocket.png";
+import logo from "../src/assets/icons/SpaceX.svg";
 
 function App() {
   return (
     <Container>
       <Header>
-        <ButtonTema alt="tema" />
+        <ButtonTema src={moon} alt="tema" />
       </Header>
       <Row>
         <BodyLogo>
-          <Logo alt="logo" />
+          <Logo src={logo} alt="logo" />
         </BodyLogo>
         <BodyForm>
           <Form>
-            <Icon alt="rocket" />
+            <Icon src={rocket} alt="rocket" />
             <Title>Decolagem</Title>
             <Input
               type="text"
