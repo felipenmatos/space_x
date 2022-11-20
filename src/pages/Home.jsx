@@ -4,6 +4,29 @@ import background from "../assets/background/BackgroundHome.png";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import Title from "../components/Title/Title";
+import { Chart } from "react-google-charts";
+
+export const data = [
+  ["Task", "Hours per Day"],
+  ["Work", 11],
+  ["Eat", 2],
+  ["Commute", 2],
+  ["Watch TV", 2],
+  ["Sleep", 7],
+];
+
+export const datacolumns = [
+  ["Element", "Density", { role: "style" }],
+  ["Copper", 8.94, "#b87333"], // RGB value
+  ["Silver", 10.49, "silver"], // English color name
+  ["Gold", 19.3, "gold"],
+  ["Platinum", 21.45, "color: #e5e4e2"], // CSS-style declaration
+  ["Platinum", 21.45, "color: red"],
+];
+
+export const options = {
+  title: "Lançamentos de foguetes",
+};
 
 function Home() {
   const navigate = useNavigate();
@@ -19,8 +42,23 @@ function Home() {
         <BodyData>
           <Title title="Dados analíticos dos lançamentos" />
           <RowData>
-            <ContainerData>infos</ContainerData>
-            <ContainerData>infos</ContainerData>
+            <ContainerData>
+              <ChartDiv
+                chartType="PieChart"
+                data={data}
+                options={options}
+                width={"100%"}
+                height={"400px"}
+              />
+            </ContainerData>
+            <ContainerData>
+              <Chart
+                chartType="ColumnChart"
+                width="100%"
+                height="400px"
+                data={datacolumns}
+              />
+            </ContainerData>
           </RowData>
         </BodyData>
         <BodyDataDetails>
@@ -139,6 +177,7 @@ const ContainerData = styled.div`
   margin-top: 40px;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   background: rgba(189, 0, 255, 0.43);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
@@ -155,6 +194,8 @@ const ContainerData = styled.div`
     }
   }
 `;
+
+const ChartDiv = styled(Chart)``;
 
 const BodyDataDetails = styled.div`
   width: 100%;
