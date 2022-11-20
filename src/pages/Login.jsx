@@ -212,7 +212,7 @@ const Icon = styled.img`
 `;
 
 const Input = styled.input`
-  width: 250px;
+  width: 280px;
   height: 40px;
   padding: 5px 5px;
   background: rgba(0, 0, 0, 0.63);
@@ -220,7 +220,7 @@ const Input = styled.input`
   outline: none;
   font-family: "Roboto", sans-serif;
   font-wheight: 400;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 42px;
   text-align: center;
   color: #ffffff;
@@ -228,7 +228,7 @@ const Input = styled.input`
   :placeholder {
     font-family: "Roboto", sans-serif;
     font-wheight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 42px;
   }
 `;

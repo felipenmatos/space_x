@@ -177,7 +177,7 @@ const RowSearch = styled.div`
 `;
 
 const SearchInput = styled.input`
-  width: 450px;
+  width: 600px;
   height: 40px;
   background: rgba(0, 0, 0, 0.59);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
@@ -188,15 +188,16 @@ const SearchInput = styled.input`
   outline: none;
   font-family: "Roboto", sans-serif;
   font-wheight: 400;
-  font-size: 16px;
+  font-size: 20px;
   line-height: 42px;
   color: #ffffff;
 
   :placeholder {
     font-family: "Roboto", sans-serif;
     font-wheight: 400;
-    font-size: 16px;
+    font-size: 20px;
     line-height: 42px;
+    color: #ffffff;
   }
 `;
 
