@@ -1,12 +1,13 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 import background from "../assets/background/BackgroundHome.png";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Chart } from "react-google-charts";
-import dataMock from "../data/mock-data.json";
+import { urlDataLaunches } from "../api/api";
 
 export const data = [
   ["Task", "Hours per Day"],
@@ -34,18 +35,33 @@ let PageSize = 5;
 
 function Home() {
   const [currentPage, setCurrentPage] = React.useState(1);
+  const [dataLaunches, setDataLaunches] = React.useState([]);
+  const [loading, setLoading] = React.useState(null);
 
   const currentTableData = React.useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return dataMock.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage]);
+    return dataLaunches.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage, dataLaunches]);
 
   const navigate = useNavigate();
 
   function exit() {
     navigate("/");
   }
+
+  React.useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      const response = await axios.get(urlDataLaunches);
+      setDataLaunches(response.data[0]);
+      setLoading(false);
+    };
+
+    getData();
+  }, []);
+
+  console.log(dataLaunches);
 
   return (
     <Container>
@@ -89,23 +105,28 @@ function Home() {
               <Label>Texto1</Label>
               <Label>Texto1</Label>
             </Labels>
+            {loading && (
+              <BodyLoading>
+                <Loading />
+              </BodyLoading>
+            )}
             {currentTableData.map((item) => {
               return (
                 <Details>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
-                  <Text>{item.id}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
+                  <Text>{item.flight_number}</Text>
                 </Details>
               );
             })}
             <Pagination
               className="pagination-bar"
               currentPage={currentPage}
-              totalCount={dataMock.length}
+              totalCount={dataLaunches.length}
               pageSize={PageSize}
               onPageChange={(page) => setCurrentPage(page)}
             />
@@ -303,6 +324,31 @@ const Text = styled.p`
   line-height: 16px;
   text-align: center;
   color: #000;
+`;
+
+const BodyLoading = styled.div`
+  width: 100px;
+  margin-top: 10%;
+  margin-left: 45%;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  transform: scale(5);
+`;
+
+const Loading = styled.div`
+  animation: is-rotating 1s infinite;
+  width: 10px;
+  height: 10px;
+  margin-top: 10%;
+  border: 2px solid #e5e5e5;
+  border-top-color: #51d4db;
+  border-radius: 50%;
+  @keyframes is-rotating {
+    to {
+      transform: rotate(1turn);
+    }
+  }
 `;
 
 export default Home;
