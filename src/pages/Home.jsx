@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import background from "../assets/background/BackgroundHome.png";
+import imgYoutube from "../assets/icons/youtube.png";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
 import Pagination from "../components/Pagination/Pagination";
@@ -97,39 +98,67 @@ function Home() {
           </RowSearch>
           <ContainerDetails>
             <Labels>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
-              <Label>Texto1</Label>
+              <Label>N° Vôo</Label>
+              <Label>Logo</Label>
+              <Label>Missão</Label>
+              <Label>Data de Lançamento</Label>
+              <Label>Foguete</Label>
+              <Label>Resultado</Label>
+              <Label>Vídeo</Label>
             </Labels>
             {loading && (
               <BodyLoading>
                 <Loading />
               </BodyLoading>
             )}
-            {currentTableData.map((item) => {
-              return (
-                <Details>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                  <Text>{item.flight_number}</Text>
-                </Details>
-              );
-            })}
-            <Pagination
-              className="pagination-bar"
-              currentPage={currentPage}
-              totalCount={dataLaunches.length}
-              pageSize={PageSize}
-              onPageChange={(page) => setCurrentPage(page)}
-            />
+            {!loading && (
+              <>
+                {currentTableData.map((item) => {
+                  return (
+                    <Details>
+                      <Text>{item.flight_number}</Text>
+                      {item.links && (
+                        <LogoData src={item.links.patch.large} alt="logo" />
+                      )}
+                      <TextName>{item.name}</TextName>
+                      <TextDate>
+                        {new Date(item.date_local).toLocaleDateString("pt-BR", {
+                          timeZone: "UTC",
+                        })}
+                      </TextDate>
+                      <Text>{item.flight_number}</Text>
+                      {item.success === true ? (
+                        <ContainerSuccess>
+                          <TextSuccesso>SUCESSO</TextSuccesso>
+                        </ContainerSuccess>
+                      ) : (
+                        <ContainerFail>
+                          <TextFail>FALHA</TextFail>
+                        </ContainerFail>
+                      )}
+                      {item.links ? (
+                        <LinkVideo href={item.links.webcast} target="_blank">
+                          <ImgVideo src={imgYoutube} alt="Video" />
+                        </LinkVideo>
+                      ) : (
+                        <LinkVideo target="_blank">
+                          <ImgVideo src={imgYoutube} alt="Video" />
+                        </LinkVideo>
+                      )}
+                    </Details>
+                  );
+                })}
+              </>
+            )}
+            {!loading && (
+              <Pagination
+                className="pagination-bar"
+                currentPage={currentPage}
+                totalCount={dataLaunches.length}
+                pageSize={PageSize}
+                onPageChange={(page) => setCurrentPage(page)}
+              />
+            )}
           </ContainerDetails>
         </BodyDataDetails>
       </Body>
@@ -274,7 +303,7 @@ const ButtonSearch = styled.button`
 `;
 
 const ContainerDetails = styled.div`
-  width: 1080px;
+  width: 1380px;
   height: 500px;
   background: rgba(0, 0, 0, 0.59);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
@@ -302,8 +331,8 @@ const Label = styled.p`
 `;
 
 const Details = styled.div`
-  width: 100%;
-  height: 50px;
+  width: 99%;
+  height: 55px;
   margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.58);
   border: none;
@@ -314,16 +343,108 @@ const Details = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 5px;
+`;
+
+const LogoData = styled.img`
+  width: 25px;
+  height: 25px;
+  margin-right: -25px;
 `;
 
 const Text = styled.p`
   font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 16px;
   text-align: center;
   color: #000;
+`;
+
+const TextDate = styled.p`
+  width: 140px;
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: -50px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #000;
+`;
+
+const TextName = styled.p`
+  width: 140px;
+  display: flex;
+  flex-direction: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: -60px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #000;
+`;
+
+const ContainerSuccess = styled.div`
+  margin-left: -20px;
+  margin-right: -15px;
+  width: 100px;
+  height: 40px;
+  background: green;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const ContainerFail = styled.div`
+  margin-left: -20px;
+  margin-right: -15px;
+  width: 100px;
+  height: 40px;
+  background: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+`;
+
+const TextSuccesso = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const TextFail = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: #ffffff;
+`;
+
+const LinkVideo = styled.a`
+  margin-left: -30px;
+`;
+
+const ImgVideo = styled.img`
+  width: 35px;
+  height: 30px;
 `;
 
 const BodyLoading = styled.div`
