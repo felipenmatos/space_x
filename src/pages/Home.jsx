@@ -3,8 +3,10 @@ import styled from "styled-components";
 import background from "../assets/background/BackgroundHome.png";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
+import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Chart } from "react-google-charts";
+import dataMock from "../data/mock-data.json";
 
 export const data = [
   ["Task", "Hours per Day"],
@@ -28,7 +30,17 @@ export const options = {
   title: "Lançamentos de foguetes",
 };
 
+let PageSize = 5;
+
 function Home() {
+  const [currentPage, setCurrentPage] = React.useState(1);
+
+  const currentTableData = React.useMemo(() => {
+    const firstPageIndex = (currentPage - 1) * PageSize;
+    const lastPageIndex = firstPageIndex + PageSize;
+    return dataMock.slice(firstPageIndex, lastPageIndex);
+  }, [currentPage]);
+
   const navigate = useNavigate();
 
   function exit() {
@@ -77,51 +89,26 @@ function Home() {
               <Label>Texto1</Label>
               <Label>Texto1</Label>
             </Labels>
-            <Details>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-            </Details>
-            <Details>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-            </Details>
-            <Details>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-            </Details>
-            <Details>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-            </Details>
-            <Details>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-              <Text>Texto1</Text>
-            </Details>
+            {currentTableData.map((item) => {
+              return (
+                <Details>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                  <Text>{item.id}</Text>
+                </Details>
+              );
+            })}
+            <Pagination
+              className="pagination-bar"
+              currentPage={currentPage}
+              totalCount={dataMock.length}
+              pageSize={PageSize}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
           </ContainerDetails>
         </BodyDataDetails>
       </Body>
