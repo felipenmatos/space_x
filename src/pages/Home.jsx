@@ -5,32 +5,11 @@ import background from "../assets/background/BackgroundHome.png";
 import imgYoutube from "../assets/icons/youtube.png";
 import Header from "../components/Header/Header";
 import { useNavigate } from "react-router-dom";
+import { useHook } from "../context/state";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Chart } from "react-google-charts";
 import { urlDataLaunches } from "../api/api";
-
-export const data = [
-  ["Task", "Hours per Day"],
-  ["Work", 11],
-  ["Eat", 2],
-  ["Commute", 2],
-  ["Watch TV", 2],
-  ["Sleep", 7],
-];
-
-export const datacolumns = [
-  ["Element", "Density", { role: "style" }],
-  ["Copper", 8.94, "#b87333"], // RGB value
-  ["Silver", 10.49, "silver"], // English color name
-  ["Gold", 19.3, "gold"],
-  ["Platinum", 21.45, "color: #e5e4e2"], // CSS-style declaration
-  ["Platinum", 21.45, "color: red"],
-];
-
-export const options = {
-  title: "Lançamentos de foguetes",
-};
 
 let PageSize = 5;
 
@@ -38,6 +17,35 @@ function Home() {
   const [currentPage, setCurrentPage] = React.useState(1);
   const [dataLaunches, setDataLaunches] = React.useState([]);
   const [loading, setLoading] = React.useState(null);
+  const [success, setSuccess] = React.useState();
+  //const [search, setSearch] = React.useState("");
+  const [fail, setFail] = React.useState();
+  const [falcon, setFalcon] = React.useState();
+  const [crs, setCrs] = React.useState();
+  const [asia, setAsia] = React.useState();
+  const [star, setStar] = React.useState();
+  const [transporter, setTransporter] = React.useState();
+  const [filterYear2020, setFilterYear2020] = React.useState();
+  const [filterYear2021, setFilterYear2021] = React.useState();
+  const [filterYear2022, setFilterYear2022] = React.useState();
+  const { userContext } = useHook();
+  const { name } = userContext;
+
+  const data = [
+    ["Task", "Hours per Day"],
+    ["Falcon 1", falcon],
+    ["CRS", crs],
+    ["AsiaSat", asia],
+    ["Starlink", star],
+    ["Transporter", transporter],
+  ];
+
+  const datacolumns = [
+    ["Element", "Lançamentos", { role: "style" }],
+    ["2020", filterYear2020, "color: red"],
+    ["2021", filterYear2021, "color: red"],
+    ["2022", filterYear2022, "color: red"],
+  ];
 
   const currentTableData = React.useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
@@ -62,31 +70,108 @@ function Home() {
     getData();
   }, []);
 
-  console.log(dataLaunches);
+  React.useEffect(() => {
+    const filtroSuccess = dataLaunches.filter((valorAtual) => {
+      return valorAtual.success;
+    });
+    const fail = dataLaunches.length - filtroSuccess.length;
+    setSuccess(filtroSuccess.length);
+    setFail(fail);
+    const filtroFalcon = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.name) {
+        return valorAtual.name.includes("Falcon");
+      }
+    });
+    setFalcon(filtroFalcon.length);
+    const filtroCRS = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.name) {
+        return valorAtual.name.includes("CRS");
+      }
+    });
+    setCrs(filtroCRS.length);
+    const filtroASIA = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.name) {
+        return valorAtual.name.includes("Asia");
+      }
+    });
+    setAsia(filtroASIA.length);
+    const filtroSTAR = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.name) {
+        return valorAtual.name.includes("Star");
+      }
+    });
+    setStar(filtroSTAR.length);
+    const filtroTransporter = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.name) {
+        return valorAtual.name.includes("Transp");
+      }
+    });
+    setTransporter(filtroTransporter.length);
+    const filtro2020 = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.date_local) {
+        return valorAtual.date_local.includes(2020);
+      }
+    });
+    setFilterYear2020(filtro2020.length);
+    const filtro2021 = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.date_local) {
+        return valorAtual.date_local.includes(2021);
+      }
+    });
+    setFilterYear2021(filtro2021.length);
+    const filtro2022 = dataLaunches.filter((valorAtual) => {
+      if (valorAtual.date_local) {
+        return valorAtual.date_local.includes(2022);
+      }
+    });
+    setFilterYear2022(filtro2022.length);
+  }, [
+    setSuccess,
+    dataLaunches,
+    setFalcon,
+    setCrs,
+    setStar,
+    setAsia,
+    setTransporter,
+  ]);
 
   return (
     <Container>
-      <Header onClick={() => exit()} name="Felipe" />
+      <Header onClick={() => exit()} name={name} />
       <Body>
         <BodyData>
           <Title title="Dados analíticos dos lançamentos" />
           <RowData>
             <ContainerData>
-              <ChartDiv
-                chartType="PieChart"
-                data={data}
-                options={options}
-                width={"100%"}
-                height={"400px"}
-              />
+              <LabelChart>Lançamentos de foguetes</LabelChart>
+              <DivChart>
+                <ChartDiv
+                  chartType="PieChart"
+                  data={data}
+                  width={"100%"}
+                  height={"400px"}
+                />
+              </DivChart>
+              <LabelChartResult>Resultado de lançamento:</LabelChartResult>
+              <Row>
+                <Text>Sucesso: </Text>
+                <TextChartSuccess>{success}</TextChartSuccess>
+              </Row>
+              <Row>
+                <Text>Falha: </Text>
+                <TextChartFail>{fail}</TextChartFail>
+              </Row>
             </ContainerData>
             <ContainerData>
-              <Chart
-                chartType="ColumnChart"
-                width="100%"
-                height="400px"
-                data={datacolumns}
-              />
+              <LabelChart>Lançamentos por ano</LabelChart>
+              <DivChart>
+                <Chart
+                  chartType="ColumnChart"
+                  width="100%"
+                  height="400px"
+                  data={datacolumns}
+                />
+              </DivChart>
             </ContainerData>
           </RowData>
         </BodyData>
@@ -210,13 +295,13 @@ const RowData = styled.div`
 
 const ContainerData = styled.div`
   width: 500px;
-  height: 500px;
+  height: 660px;
   margin-top: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+
   align-items: center;
-  background: rgba(189, 0, 255, 0.43);
+  background: #ffffff;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
     0px 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 40px;
@@ -232,7 +317,64 @@ const ContainerData = styled.div`
   }
 `;
 
+const LabelChart = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  color: #000;
+`;
+
+const LabelChartResult = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 28px;
+  text-align: center;
+  color: #000;
+`;
+
 const ChartDiv = styled(Chart)``;
+
+const DivChart = styled.div`
+  margin-top: 40px;
+  width: 100%;
+`;
+
+const Row = styled.div`
+  width: 50px;
+  margin-top: -20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
+`;
+
+const TextChartSuccess = styled.p`
+  margin-left: 5px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: green;
+`;
+
+const TextChartFail = styled.p`
+  margin-left: 5px;
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 16px;
+  text-align: center;
+  color: red;
+`;
 
 const BodyDataDetails = styled.div`
   width: 100%;
