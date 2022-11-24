@@ -18,7 +18,7 @@ function Home() {
   const [dataLaunches, setDataLaunches] = React.useState([]);
   const [loading, setLoading] = React.useState(null);
   const [success, setSuccess] = React.useState();
-  //const [search, setSearch] = React.useState("");
+  const [search, setSearch] = React.useState("");
   const [fail, setFail] = React.useState();
   const [falcon, setFalcon] = React.useState();
   const [crs, setCrs] = React.useState();
@@ -135,6 +135,10 @@ function Home() {
     setTransporter,
   ]);
 
+  const searchFilter = currentTableData.filter((busca) =>
+    busca.name.includes(search)
+  );
+
   return (
     <Container>
       <Header onClick={() => exit()} name={name} />
@@ -178,7 +182,12 @@ function Home() {
         <BodyDataDetails>
           <Title title="Registro de lançamentos" />
           <RowSearch>
-            <SearchInput placeholder="Pesquisar por..." />
+            <SearchInput
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Pesquisar por..."
+            />
             <ButtonSearch>Buscar</ButtonSearch>
           </RowSearch>
           <ContainerDetails>
@@ -198,7 +207,7 @@ function Home() {
             )}
             {!loading && (
               <>
-                {currentTableData.map((item) => {
+                {searchFilter.map((item) => {
                   return (
                     <Details>
                       <Text>{item.flight_number}</Text>
