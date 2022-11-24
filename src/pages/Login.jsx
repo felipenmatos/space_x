@@ -9,10 +9,12 @@ import logo from "../../src/assets/icons/SpaceX.svg";
 import Title from "../components/Title/Title";
 import FormCount from "../components/FormCount/FormCount";
 import { useNavigate } from "react-router-dom";
+import { useHook } from "../context/state";
 
 function Login() {
+  const { userContext } = useHook();
+  const { name, setName } = userContext;
   const [tema, setTema] = React.useState(false);
-  const [name, setName] = React.useState("");
   const [error, setError] = React.useState(false);
   const [bodyForm, setBodyForm] = React.useState(true);
   const [bodyCount, setBodyCount] = React.useState(false);
@@ -52,7 +54,6 @@ function Login() {
         navigate("/Home");
         setBodyCount(false);
         setBodyForm(true);
-        setName("");
       }, 4000);
       localStorage.setItem("current_user", "autenticado");
     }

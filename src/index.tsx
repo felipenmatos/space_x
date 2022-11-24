@@ -3,14 +3,15 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import RouterPages from "./App";
+import UseState from "./context/state";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <React.StrictMode>
+  <UseState>
     <RouterPages />
-  </React.StrictMode>
+  </UseState>
 );
 
 // If you want to start measuring performance in your app, pass a function
