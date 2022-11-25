@@ -32,6 +32,11 @@ const Container = styled.div`
     width: 370px;
     height: 370px;
   }
+
+  @media (max-width: 580px) {
+    width: 320px;
+    height: 320px;
+  }
 `;
 
 const Icon = styled.img`
@@ -39,6 +44,11 @@ const Icon = styled.img`
   height: 62px;
   transform: rotate(29.63deg);
   margin-top: -9%;
+
+  @media (max-width: 580px) {
+    width: 39px;
+    height: 52px;
+  }
 `;
 
 const Subtitle = styled.p`

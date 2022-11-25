@@ -22,6 +22,10 @@ const Text = styled.h1`
   text-align: center;
 
   color: #ffffff;
+
+  @media (max-width: 580px) {
+    font-size: 30px;
+  }
 `;
 
 export default Title;

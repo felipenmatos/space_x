@@ -2,9 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import axios from "axios";
 import backgroundWhite from "../../src/assets/background/Background-Login.png";
-import backgroundDark from "../../src/assets/background/Background-Dark.png";
-import sun from "../../src/assets/icons/sun.png";
-import moon from "../../src/assets/icons/moon.png";
+import backgroundWhiteMobile from "../../src/assets/background/Background-Login-Mobile.png";
 import rocket from "../../src/assets/icons/rocket.png";
 import logo from "../../src/assets/icons/SpaceX.svg";
 import Title from "../components/Title/Title";
@@ -16,7 +14,6 @@ import { urlDataLaunches, urlDataStatus } from "../api/api";
 function Login() {
   const { userContext } = useHook();
   const { name, setName } = userContext;
-  const [tema, setTema] = React.useState(false);
   const [error, setError] = React.useState(false);
   const [bodyForm, setBodyForm] = React.useState(true);
   const [bodyCount, setBodyCount] = React.useState(false);
@@ -79,20 +76,7 @@ function Login() {
   startTimer();
 
   return (
-    <Container
-      style={
-        tema
-          ? { backgroundImage: `url(${backgroundDark})` }
-          : { backgroundImage: `url(${backgroundWhite})` }
-      }
-    >
-      <Header>
-        <ButtonTema
-          src={tema ? sun : moon}
-          alt="tema"
-          onClick={() => setTema(!tema)}
-        />
-      </Header>
+    <Container>
       <Row>
         <BodyLogo>
           <Logo src={logo} alt="logo" />
@@ -133,6 +117,7 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   background-repeat: no-repeat;
+  background-image: url(${backgroundWhite});
   background-size: 100vw 100vh;
 
   @media (max-width: 888px) {
@@ -144,21 +129,10 @@ const Container = styled.div`
     align-items: center;
     overflow-x: hidden;
   }
-`;
 
-const Header = styled.div`
-  width: 100%;
-  height: 10vh;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-`;
-
-const ButtonTema = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-left: 90%;
-  cursor: pointer;
+  @media (max-width: 580px) {
+    background-image: url(${backgroundWhiteMobile});
+  }
 `;
 
 const Row = styled.div`
@@ -194,7 +168,11 @@ const BodyLogo = styled.div`
   }
 `;
 
-const Logo = styled.img``;
+const Logo = styled.img`
+  @media (max-width: 580px) {
+    width: 150px;
+  }
+`;
 
 const BodyForm = styled.div`
   width: 50%;
@@ -220,6 +198,11 @@ const Form = styled.div`
     width: 370px;
     height: 370px;
   }
+
+  @media (max-width: 580px) {
+    width: 320px;
+    height: 320px;
+  }
 `;
 
 const Icon = styled.img`
@@ -227,6 +210,11 @@ const Icon = styled.img`
   height: 62px;
   transform: rotate(29.63deg);
   margin-top: -5%;
+
+  @media (max-width: 580px) {
+    width: 39px;
+    height: 52px;
+  }
 `;
 
 const Input = styled.input`
@@ -249,6 +237,12 @@ const Input = styled.input`
     font-size: 20px;
     line-height: 42px;
   }
+
+  @media (max-width: 580px) {
+    width: 240px;
+    height: 35px;
+    font-size: 18px;
+  }
 `;
 
 const Error = styled.p`
@@ -261,6 +255,11 @@ const Error = styled.p`
   line-height: 42px;
   text-align: center;
   color: #305dff;
+
+  @media (max-width: 580px) {
+    font-size: 13px;
+    line-height: 42px;
+  }
 `;
 
 const Button = styled.button`
@@ -284,6 +283,10 @@ const Button = styled.button`
     background: transparent;
     color: #ffffff;
     border: 2px solid #bd00ff;
+  }
+
+  @media (max-width: 580px) {
+    font-size: 20px;
   }
 `;
 
