@@ -189,35 +189,44 @@ function Home() {
                 {searchFilter.map((item) => {
                   return (
                     <Details>
-                      <Text>{item.flight_number}</Text>
-                      {item.links && (
-                        <LogoData src={item.links.patch.large} alt="logo" />
-                      )}
-                      <TextName>{item.name}</TextName>
-                      <TextDate>
-                        {new Date(item.date_local).toLocaleDateString("pt-BR", {
-                          timeZone: "UTC",
-                        })}
-                      </TextDate>
-                      <Text>{item.flight_number}</Text>
-                      {item.success === true ? (
-                        <ContainerSuccess>
-                          <TextSuccesso>SUCESSO</TextSuccesso>
-                        </ContainerSuccess>
-                      ) : (
-                        <ContainerFail>
-                          <TextFail>FALHA</TextFail>
-                        </ContainerFail>
-                      )}
-                      {item.links ? (
-                        <LinkVideo href={item.links.webcast} target="_blank">
-                          <ImgVideo src={imgYoutube} alt="Video" />
-                        </LinkVideo>
-                      ) : (
-                        <LinkVideo target="_blank">
-                          <ImgVideo src={imgYoutube} alt="Video" />
-                        </LinkVideo>
-                      )}
+                      <DivColumnLogo>
+                        <Text>{item.flight_number}</Text>
+                        {item.links && (
+                          <LogoData src={item.links.patch.large} alt="logo" />
+                        )}
+                      </DivColumnLogo>
+                      <DivColumnMission>
+                        <TextName>{item.name}</TextName>
+                        <TextDate>
+                          {new Date(item.date_local).toLocaleDateString(
+                            "pt-BR",
+                            {
+                              timeZone: "UTC",
+                            }
+                          )}
+                        </TextDate>
+                      </DivColumnMission>
+                      <TextRocket>{item.flight_number}</TextRocket>
+                      <DivColumnStatus>
+                        {item.success === true ? (
+                          <ContainerSuccess>
+                            <TextSuccesso>SUCESSO</TextSuccesso>
+                          </ContainerSuccess>
+                        ) : (
+                          <ContainerFail>
+                            <TextFail>FALHA</TextFail>
+                          </ContainerFail>
+                        )}
+                        {item.links ? (
+                          <LinkVideo href={item.links.webcast} target="_blank">
+                            <ImgVideo src={imgYoutube} alt="Video" />
+                          </LinkVideo>
+                        ) : (
+                          <LinkVideo target="_blank">
+                            <ImgVideo src={imgYoutube} alt="Video" />
+                          </LinkVideo>
+                        )}
+                      </DivColumnStatus>
                     </Details>
                   );
                 })}
@@ -279,6 +288,12 @@ const RowData = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
+
+  @media (max-width: 1050px) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 `;
 
 const ContainerData = styled.div`
@@ -303,6 +318,11 @@ const ContainerData = styled.div`
       transform: translateY(0);
     }
   }
+
+  @media (max-width: 880px) {
+    width: 380px;
+    height: 560px;
+  }
 `;
 
 const LabelChart = styled.p`
@@ -313,6 +333,11 @@ const LabelChart = styled.p`
   line-height: 28px;
   text-align: center;
   color: #000;
+
+  @media (max-width: 880px) {
+    font-size: 20px;
+    margin-bottom: -40px;
+  }
 `;
 
 const LabelChartResult = styled.p`
@@ -323,6 +348,10 @@ const LabelChartResult = styled.p`
   line-height: 28px;
   text-align: center;
   color: #000;
+
+  @media (max-width: 880px) {
+    margin-top: -5px;
+  }
 `;
 
 const ChartDiv = styled(Chart)``;
@@ -407,6 +436,11 @@ const SearchInput = styled.input`
     line-height: 42px;
     color: #ffffff;
   }
+
+  @media (max-width: 880px) {
+    width: 380px;
+    height: 40px;
+  }
 `;
 
 const ContainerDetails = styled.div`
@@ -419,12 +453,21 @@ const ContainerDetails = styled.div`
   display: flex;
   flex-direction: column;
   padding: 15px 15px;
+
+  @media (max-width: 880px) {
+    width: 380px;
+    height: 700px;
+    margin-bottom: 20px;
+  }
 `;
 
 const Labels = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  @media (max-width: 880px) {
+    display: none;
+  }
 `;
 
 const Label = styled.p`
@@ -448,15 +491,80 @@ const Details = styled.div`
   border-radius: 2px;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   padding: 0px 5px;
+
+  @media (max-width: 880px) {
+    width: 98%;
+    height: 85px;
+    margin-top: 25px;
+  }
+`;
+
+const DivColumnLogo = styled.div`
+  width: 160px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  @media (max-width: 880px) {
+    width: 20px;
+    margin-left: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+const DivColumnMission = styled.div`
+  width: 300px;
+  margin-left: 160px;
+  margin-right: 180px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 880px) {
+    width: 40px;
+    margin-left: 150px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+`;
+
+const DivColumnStatus = styled.div`
+  width: 220px;
+  margin-left: 140px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  @media (max-width: 880px) {
+    width: 40px;
+    margin-left: 60px;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
 `;
 
 const LogoData = styled.img`
   width: 25px;
   height: 25px;
   margin-right: -25px;
+
+  @media (max-width: 580px) {
+    margin-right: 0px;
+  }
 `;
 
 const Text = styled.p`
@@ -467,6 +575,24 @@ const Text = styled.p`
   line-height: 16px;
   text-align: center;
   color: #000;
+
+  @media (max-width: 580px) {
+    font-size: 18px;
+  }
+`;
+
+const TextRocket = styled.p`
+  font-family: "Roboto", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 16px;
+  text-align: center;
+  color: #000;
+
+  @media (max-width: 580px) {
+    display: none;
+  }
 `;
 
 const TextDate = styled.p`
@@ -547,6 +673,9 @@ const TextFail = styled.p`
 
 const LinkVideo = styled.a`
   margin-left: -30px;
+  @media (max-width: 580px) {
+    margin-left: 0px;
+  }
 `;
 
 const ImgVideo = styled.img`
