@@ -63,3 +63,9 @@
   background-color: transparent;
   cursor: default;
 }
+
+@media screen and (max-width: 880px) {
+  .pagination-container {
+    margin-left: -10%;
+  }
+}
