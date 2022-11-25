@@ -1,46 +1,39 @@
-# Getting Started with Create React App
+# Introdução:
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+O projeto consiste em um desenvolvimento do aplicativo Web e Mobile da SpaceX, onde é possível efetuar o login com validação e verificar detalhamento de lançamentos, status e gráficos, com regra de paginação, renderização de listagem e filtro. O projeto em si tem como baixa/média escalabilidade, no qual foi adaptado a algumas práticas de Clean Code para otimizar o resultado.
 
-## Available Scripts
+## Deploy do Projeto Front-end: https://spacex-coodesh.netlify.app/
 
-In the project directory, you can run:
+## Deploy da API: https://spacex-coodesh.herokuapp.com/ 
 
-### `npm start`
+## Inicialização do Projeto:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Para inicializar o projeto baixado pelo Github, primeiro deve executar no terminal o npm install e em seguida executar npm start ou pelo Docker criando a imagem.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Desenvolvimento:
 
-### `npm test`
+O projeto teve como arquitetura de desenvolvimento, React + Typescript, no qual foi implementado os componentes reutilizáveis com tipificação dos seus atributos para manter o padrão do projeto. Foi utilizado Jest como teste dos componentes. A estilização foi criada utilizando o styled-components seguindo o design do Figma. A api foi desenvolvida em NodeJs, consumindo o banco de dados no MongoDb, fazendo assim o tratamento dos endpoints. No teste de usabilidade, vi que para garantir uma experiência mais fácil teria que reformular alguns padrões para deixar a usabilidade mais fácil e limpa. As rotas foram autenticadas utilizando o localStorage, sendo necessário o registro na tela de Login. Por fim, foi configurado o Docker na raiz do projeto, como solicitado no teste.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Imagem da arquitetura desenvolvida no MIRO:
 
-### `npm run build`
+![Arquitetura](https://user-images.githubusercontent.com/82072640/204061541-b9326671-a8ad-4040-b481-665d93ffe2b4.jpg)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Bibliotecas e pacotes utilizados no Projeto:
+• NPM • REACT-ROUTER-DOM • STYLED-COMPONENTS • JEST • AXIOS • GOOGLE CHARTS 
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Protótipo:
+O protótipo foi desenvolvido com base no exemplo informado no readme e recriado utilizando o Figma, mantendo um Design System para o projeto.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+![Protótipo](https://user-images.githubusercontent.com/82072640/204061576-8c878a00-c0f3-4bb2-a9dd-89c03ac4eb36.jpg)
 
-### `npm run eject`
+## Imagens: 
+![Login](https://user-images.githubusercontent.com/82072640/204062007-d436f8f8-fa56-4304-83f6-e98b9721e545.jpg)
+![Login2](https://user-images.githubusercontent.com/82072640/204062012-27cb879f-9d7a-4b34-b8c6-6deaf26c88dc.jpg)
+![Home1](https://user-images.githubusercontent.com/82072640/204062017-1e61133e-d998-4523-9801-6be26188e239.jpg)
+![Home2](https://user-images.githubusercontent.com/82072640/204062023-61ff9e47-351c-4c21-b088-a8262b682efd.jpg)
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Vídeo de Usabilidade 
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+https://user-images.githubusercontent.com/82072640/204061830-b4b215fd-3e53-4efe-b229-e0e8edc5440f.mp4
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
