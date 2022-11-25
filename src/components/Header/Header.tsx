@@ -30,6 +30,10 @@ const Container = styled.div`
 
 const Logo = styled.img`
   margin-left: 20px;
+
+  @media (max-width: 580px) {
+    width: 130px;
+  }
 `;
 
 const Row = styled.div`
@@ -39,6 +43,10 @@ const Row = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+
+  @media (max-width: 580px) {
+    width: 80px;
+  }
 `;
 
 const Text = styled.p`
@@ -48,6 +56,10 @@ const Text = styled.p`
   line-height: 42px;
   text-align: center;
   color: #ffffff;
+
+  @media (max-width: 880px) {
+    display: none;
+  }
 `;
 
 const Button = styled.button`
@@ -70,6 +82,12 @@ const Button = styled.button`
     background: transparent;
     color: #ffffff;
     border: 2px solid #bd00ff;
+  }
+
+  @media (max-width: 580px) {
+    width: 80px;
+    height: 40px;
+    font-size: 20px;
   }
 `;
 
