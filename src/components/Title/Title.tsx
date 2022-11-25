@@ -24,7 +24,7 @@ const Text = styled.h1`
   color: #ffffff;
 
   @media (max-width: 580px) {
-    font-size: 30px;
+    font-size: 28px;
   }
 `;
 
