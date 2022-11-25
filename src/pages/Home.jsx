@@ -56,7 +56,9 @@ function Home() {
   const currentTableData = React.useMemo(() => {
     const firstPageIndex = (currentPage - 1) * PageSize;
     const lastPageIndex = firstPageIndex + PageSize;
-    return dataLaunches.slice(firstPageIndex, lastPageIndex);
+
+    const filtro = dataLaunches.filter((data) => data.name);
+    return filtro.slice(firstPageIndex, lastPageIndex);
   }, [currentPage, dataLaunches]);
 
   const navigate = useNavigate();
@@ -166,7 +168,6 @@ function Home() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Pesquisar por..."
             />
-            <ButtonSearch>Buscar</ButtonSearch>
           </RowSearch>
           <ContainerDetails>
             <Labels>
@@ -405,29 +406,6 @@ const SearchInput = styled.input`
     font-size: 20px;
     line-height: 42px;
     color: #ffffff;
-  }
-`;
-
-const ButtonSearch = styled.button`
-  width: 150px;
-  height: 40px;
-  background: #ffffff;
-  border-radius: 50px;
-  text-align: center;
-  border: none;
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 24px;
-  line-height: 28px;
-  text-align: center;
-  color: #bd00ff;
-  cursor: pointer;
-
-  :hover {
-    background: transparent;
-    color: #ffffff;
-    border: 2px solid #bd00ff;
   }
 `;
 
