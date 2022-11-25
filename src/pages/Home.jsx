@@ -432,7 +432,7 @@ const ButtonSearch = styled.button`
 `;
 
 const ContainerDetails = styled.div`
-  width: 1380px;
+  width: 1180px;
   height: 500px;
   background: rgba(0, 0, 0, 0.59);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
