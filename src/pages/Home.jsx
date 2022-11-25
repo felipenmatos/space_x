@@ -9,7 +9,7 @@ import { useHook } from "../context/state";
 import Pagination from "../components/Pagination/Pagination";
 import Title from "../components/Title/Title";
 import { Chart } from "react-google-charts";
-import { urlDataLaunches } from "../api/api";
+import { urlDataLaunches, urlDataStatus } from "../api/api";
 
 let PageSize = 5;
 
@@ -20,11 +20,14 @@ function Home() {
   const [success, setSuccess] = React.useState();
   const [search, setSearch] = React.useState("");
   const [fail, setFail] = React.useState();
-  const [falcon, setFalcon] = React.useState();
-  const [crs, setCrs] = React.useState();
-  const [asia, setAsia] = React.useState();
-  const [star, setStar] = React.useState();
-  const [transporter, setTransporter] = React.useState();
+  const [falcon, setFalcon] = React.useState([]);
+  const [crs, setCrs] = React.useState([]);
+  const [asia, setAsia] = React.useState([]);
+  const [star, setStar] = React.useState([]);
+  const [transporter, setTransporter] = React.useState([]);
+  const [filterYear2017, setFilterYear2017] = React.useState([]);
+  const [filterYear2018, setFilterYear2018] = React.useState();
+  const [filterYear2019, setFilterYear2019] = React.useState();
   const [filterYear2020, setFilterYear2020] = React.useState();
   const [filterYear2021, setFilterYear2021] = React.useState();
   const [filterYear2022, setFilterYear2022] = React.useState();
@@ -33,15 +36,18 @@ function Home() {
 
   const data = [
     ["Task", "Hours per Day"],
-    ["Falcon 1", falcon],
+    ["Falcon", falcon],
     ["CRS", crs],
-    ["AsiaSat", asia],
-    ["Starlink", star],
+    ["Asia", asia],
+    ["Star", star],
     ["Transporter", transporter],
   ];
 
   const datacolumns = [
     ["Element", "Lançamentos", { role: "style" }],
+    ["2017", filterYear2017, "color: red"],
+    ["2018", filterYear2018, "color: red"],
+    ["2019", filterYear2019, "color: red"],
     ["2020", filterYear2020, "color: red"],
     ["2021", filterYear2021, "color: red"],
     ["2022", filterYear2022, "color: red"],
@@ -71,62 +77,20 @@ function Home() {
   }, []);
 
   React.useEffect(() => {
-    const filtroSuccess = dataLaunches.filter((valorAtual) => {
-      return valorAtual.success;
-    });
-    const fail = dataLaunches.length - filtroSuccess.length;
-    setSuccess(filtroSuccess.length);
-    setFail(fail);
-    const filtroFalcon = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.name) {
-        return valorAtual.name.includes("Falcon");
-      }
-    });
-    setFalcon(filtroFalcon.length);
-    const filtroCRS = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.name) {
-        return valorAtual.name.includes("CRS");
-      }
-    });
-    setCrs(filtroCRS.length);
-    const filtroASIA = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.name) {
-        return valorAtual.name.includes("Asia");
-      }
-    });
-    setAsia(filtroASIA.length);
-    const filtroSTAR = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.name) {
-        return valorAtual.name.includes("Star");
-      }
-    });
-    setStar(filtroSTAR.length);
-    const filtroTransporter = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.name) {
-        return valorAtual.name.includes("Transp");
-      }
-    });
-    setTransporter(filtroTransporter.length);
-    const filtro2020 = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.date_local) {
-        return valorAtual.date_local.includes(2020);
-      }
-    });
-    setFilterYear2020(filtro2020.length);
-    const filtro2021 = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.date_local) {
-        return valorAtual.date_local.includes(2021);
-      }
-    });
-    setFilterYear2021(filtro2021.length);
-    const filtro2022 = dataLaunches.filter((valorAtual) => {
-      if (valorAtual.date_local) {
-        return valorAtual.date_local.includes(2022);
-      }
-    });
-    setFilterYear2022(filtro2022.length);
+    const getDataStatus = async () => {
+      const response = await axios.get(urlDataStatus);
+      setSuccess(response.data.data.results.success);
+      setFail(response.data.data.results.fail);
+      setFalcon(response.data.data.rockets.falcon.number);
+      setCrs(response.data.data.rockets.crs.number);
+      setStar(response.data.data.rockets.star.number);
+      setAsia(response.data.data.rockets.asia.number);
+    };
+
+    getDataStatus();
   }, [
     setSuccess,
+    setFail,
     dataLaunches,
     setFalcon,
     setCrs,
@@ -134,6 +98,20 @@ function Home() {
     setAsia,
     setTransporter,
   ]);
+
+  React.useEffect(() => {
+    const getDataStatusYears = async () => {
+      const responseYears = await axios.get(urlDataStatus);
+      setFilterYear2017(responseYears.data.data.years.dateseven.numbers);
+      setFilterYear2018(responseYears.data.data.years.dateeight.numbers);
+      setFilterYear2019(responseYears.data.data.years.dateten.numbers);
+      setFilterYear2020(responseYears.data.data.years.dateeleven.numbers);
+      setFilterYear2021(responseYears.data.data.years.datetwelve.numbers);
+      setFilterYear2022(responseYears.data.data.years.datethirteen.numbers);
+    };
+
+    getDataStatusYears();
+  }, []);
 
   const searchFilter = currentTableData.filter((busca) =>
     busca.name.includes(search)
