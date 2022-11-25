@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import axios from "axios";
 import backgroundWhite from "../../src/assets/background/Background-Login.png";
 import backgroundDark from "../../src/assets/background/Background-Dark.png";
 import sun from "../../src/assets/icons/sun.png";
@@ -10,6 +11,7 @@ import Title from "../components/Title/Title";
 import FormCount from "../components/FormCount/FormCount";
 import { useNavigate } from "react-router-dom";
 import { useHook } from "../context/state";
+import { urlDataLaunches, urlDataStatus } from "../api/api";
 
 function Login() {
   const { userContext } = useHook();
@@ -18,6 +20,8 @@ function Login() {
   const [error, setError] = React.useState(false);
   const [bodyForm, setBodyForm] = React.useState(true);
   const [bodyCount, setBodyCount] = React.useState(false);
+  const [dataLaunches, setDataLaunches] = React.useState([]);
+  const [dataStatus, setDataStatus] = React.useState([]);
   const navigate = useNavigate();
 
   const Tempo_Total = 0;
@@ -50,6 +54,19 @@ function Login() {
       setBodyCount(true);
       setBodyForm(false);
       setTempoRestante(tempoRestante + 3);
+      const getData = async () => {
+        const response = await axios.get(urlDataLaunches);
+        setDataLaunches(response);
+        console.log(dataLaunches);
+      };
+      getData();
+      const getDataStatus = async () => {
+        const responseStatus = await axios.get(urlDataStatus);
+
+        setDataStatus(responseStatus);
+        console.log(dataStatus, "server online");
+      };
+      getDataStatus();
       setTimeout(() => {
         navigate("/Home");
         setBodyCount(false);
