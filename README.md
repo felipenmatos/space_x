@@ -26,6 +26,10 @@ O protótipo foi desenvolvido com base no exemplo informado no readme e recriado
 
 ![Protótipo](https://user-images.githubusercontent.com/82072640/204061576-8c878a00-c0f3-4bb2-a9dd-89c03ac4eb36.jpg)
 
+## Docker: 
+
+![Docker](https://user-images.githubusercontent.com/82072640/204065133-e2e1b13a-a84a-41ac-9f37-f8af208ca590.jpg)
+
 ## Imagens: 
 ![Login](https://user-images.githubusercontent.com/82072640/204062007-d436f8f8-fa56-4304-83f6-e98b9721e545.jpg)
 ![Login2](https://user-images.githubusercontent.com/82072640/204062012-27cb879f-9d7a-4b34-b8c6-6deaf26c88dc.jpg)
