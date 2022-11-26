@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import RouterPages from "./App";
+import RouterPages from "./route/Router";
 import UseState from "./context/state";
 
 const root = ReactDOM.createRoot(
