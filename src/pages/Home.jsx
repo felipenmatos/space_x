@@ -459,6 +459,12 @@ const ContainerDetails = styled.div`
     height: 700px;
     margin-bottom: 20px;
   }
+
+  @media (max-width: 380px) {
+    width: 360px;
+    height: 700px;
+    margin-bottom: 20px;
+  }
 `;
 
 const Labels = styled.div`
@@ -691,6 +697,10 @@ const BodyLoading = styled.div`
   display: flex;
   justify-content: center;
   transform: scale(5);
+
+  @media (max-width: 580px) {
+    width: 50px;
+  }
 `;
 
 const Loading = styled.div`
