@@ -58,8 +58,12 @@ function Home() {
     const lastPageIndex = firstPageIndex + PageSize;
 
     const filtro = dataLaunches.filter((data) => data.name);
+    if (search) {
+      return filtro.filter((busca) => busca.name.includes(search));
+    }
+
     return filtro.slice(firstPageIndex, lastPageIndex);
-  }, [currentPage, dataLaunches]);
+  }, [currentPage, dataLaunches, search]);
 
   const navigate = useNavigate();
 
@@ -106,10 +110,6 @@ function Home() {
 
     getDataStatusYears();
   }, []);
-
-  const searchFilter = currentTableData.filter((busca) =>
-    busca.name.includes(search)
-  );
 
   return (
     <Container>
@@ -178,7 +178,7 @@ function Home() {
             )}
             {!loading && (
               <>
-                {searchFilter.map((item) => {
+                {currentTableData.map((item) => {
                   return (
                     <Details>
                       <DivColumnLogo>
@@ -437,7 +437,6 @@ const SearchInput = styled.input`
 
 const ContainerDetails = styled.div`
   width: 1180px;
-  height: 500px;
   background: rgba(0, 0, 0, 0.59);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25), 0px 4px 4px rgba(0, 0, 0, 0.25),
     0px 4px 4px rgba(0, 0, 0, 0.25);
