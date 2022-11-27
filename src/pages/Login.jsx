@@ -54,7 +54,7 @@ function Login() {
       const getData = async () => {
         const response = await axios.get(urlDataLaunches);
         setDataLaunches(response);
-        console.log(dataLaunches);
+        console.log(dataLaunches, "server online");
       };
       getData();
       const getDataStatus = async () => {

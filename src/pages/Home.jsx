@@ -87,19 +87,11 @@ function Home() {
       setCrs(response.data.data.rockets.crs.number);
       setStar(response.data.data.rockets.star.number);
       setAsia(response.data.data.rockets.asia.number);
+      setTransporter(response.data.data.rockets.transporter.number);
     };
 
     getDataStatus();
-  }, [
-    setSuccess,
-    setFail,
-    dataLaunches,
-    setFalcon,
-    setCrs,
-    setStar,
-    setAsia,
-    setTransporter,
-  ]);
+  }, []);
 
   React.useEffect(() => {
     const getDataStatusYears = async () => {
