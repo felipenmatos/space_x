@@ -32,7 +32,7 @@ function Home() {
   const [filterYear2021, setFilterYear2021] = React.useState();
   const [filterYear2022, setFilterYear2022] = React.useState();
   const { userContext } = useHook();
-  const { name } = userContext;
+  const { name, setName } = userContext;
 
   const data = [
     ["Task", "Hours per Day"],
@@ -69,6 +69,8 @@ function Home() {
 
   function exit() {
     navigate("/");
+    localStorage.removeItem("current_user");
+    setName("");
   }
 
   React.useEffect(() => {
@@ -387,9 +389,8 @@ const TextChartFail = styled.p`
 
 const BodyDataDetails = styled.div`
   width: 100%;
-  height: 40%;
   margin-top: 5%;
-  margin-bottom: 5%;
+  margin-bottom: 10%;
   display: flex;
   flex-direction: column;
   align-items: center;
