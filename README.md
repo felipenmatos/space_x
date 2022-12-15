@@ -1,4 +1,4 @@
-# Introdução:
+# Space X
 
 O projeto consiste em um desenvolvimento do aplicativo Web e Mobile da SpaceX, onde é possível efetuar o login com validação e verificar detalhamento de lançamentos, status e gráficos, com regra de paginação, renderização de listagem e filtro. O projeto em si tem como baixa/média escalabilidade, no qual foi adaptado a algumas práticas de Clean Code para otimizar o resultado.
 
